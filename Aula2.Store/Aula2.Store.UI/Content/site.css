@@ -1,0 +1,20 @@
+﻿
+
+.myfooter {
+    background-color: #f5f5f5;
+    position:absolute;
+    bottom:0;
+    width:100%;
+    line-height:0px;
+    color:white !important;
+
+}
+
+label.is-invalid{
+    color: red;
+    font-weight:200;
+}
+
+.myfooter span{
+    color:#f5f5f5 !important;
+}

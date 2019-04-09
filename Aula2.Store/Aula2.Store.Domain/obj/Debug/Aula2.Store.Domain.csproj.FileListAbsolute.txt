@@ -1,0 +1,6 @@
+E:\Projetos\Aula2.Store\Aula2.Store.Domain\bin\Debug\Aula2.Store.Domain.dll
+E:\Projetos\Aula2.Store\Aula2.Store.Domain\bin\Debug\Aula2.Store.Domain.pdb
+E:\Projetos\Aula2.Store\Aula2.Store.Domain\obj\Debug\Aula2.Store.Domain.csproj.CoreCompileInputs.cache
+E:\Projetos\Aula2.Store\Aula2.Store.Domain\obj\Debug\Aula2.Store.Domain.dll
+E:\Projetos\Aula2.Store\Aula2.Store.Domain\obj\Debug\Aula2.Store.Domain.pdb
+E:\Projetos\Aula2.Store\Aula2.Store.Domain\obj\Debug\Aula2.Store.Domain.csprojAssemblyReference.cache

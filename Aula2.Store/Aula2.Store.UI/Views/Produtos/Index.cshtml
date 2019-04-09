@@ -1,0 +1,113 @@
+﻿@using Aula2.Store.UI.ViewModels.Produtos.Index
+
+@{
+    ViewBag.Title = "Listagem de Produtos";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<div class="pt-3 pb-3">
+    <a href="@Url.Action("AddEdit")" class="btn btn-outline-primary">Novo Produto <i class="far fa-plus-square"></i></a>
+</div>
+
+<div>
+
+    <table class="table table-striped table-hover table-responsive-sm">
+        <thead>
+            <tr>
+                <th>NOME</th>
+                <th>PREÇO</th>
+                <th>QUANTIDADE</th>
+                <th>TIPO</th>
+                <th>DATA CADASTRO</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <!--nome completo do namespace para funcionar o inter essence na lista-->
+            @foreach (ProdutoIndexVM produto in Model)
+            {
+                <tr id="produto-@produto.Id">
+                    <!--seleciona o id de cada linha do produto-->
+                    <td>@produto.Nome</td>
+                    <td>@produto.Preco.ToString("C2")</td>
+                    <td>@produto.Quantidade</td>
+                    <td>@produto.Tipo</td>
+                    <td>@produto.DataCadastro</td>
+                    <td class="btn-group">
+                        <a href="@Url.Action("AddEdit", new { id=produto.Id})" class="btn btn-sm btn-outline-success">Editar <i class="fas fa-pencil-alt"></i></a>
+                        <button onclick="DelProd(@produto.Id, '@produto.Nome')" class="btn btn-sm btn-outline-secondary">Excluir <i class="far fa-trash-alt"></i></button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<!--data é um atributo para passar mais informações em uma tag-->
+
+<div data-id="0" class="modal fade" id="delModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Excluir Produto!</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Deseja realmente excluir o produto <span id="nomeProdutoModal"></span>?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                <button onclick="ConfirmDelProd()" type="button" class="btn btn-primary">Confirmar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function DelProd(id, nome) {
+        //let resp = confirm(`Deseja excluir o produto ${nome} ?`) //let é uma variavel utilizada apenas na função
+        //if (resp) {
+        //    //console.log(id)
+        //    ConfirmDelProd(id) //chamando o metodo para exclusao
+        //}
+        $('#nomeProdutoModal').text(nome)
+        $('#delModal').data('id', id).modal('show')
+
+    }
+    //$('#ConfirmDelModal').click(function () {
+    //    let id = $('#delModal').data('id')
+    //    ConfirmDelProd(_id)
+    //})
+
+    function ConfirmDelProd() {
+        let id = $('#delModal').data('id')
+        //XMLHTTPREQUEST
+        let xhr = new XMLHttpRequest()
+        const url = `/Produtos/DelProd/${id}` //const de constante pois esta variavel nao pode ser alterada
+
+        xhr.onreadystatechange = function () {
+            if (this.readyState === 4 && this.status == 404) {
+                $('#delModal').data('id', '0').modal('hide')
+                toastr.error('Produto não localizado', 'Aula2 Store')
+                //alert('Produto não localizado!')
+            }
+            if (this.readyState === 4 && this.status === 200) {
+                //remove do html
+                let tr = document.querySelector(`#produto-${id}`)
+                if (tr != null) {
+                    tr.remove()
+                }
+                $('#delModal').data('id', '0').modal('hide')
+                toastr.success('Produto excluido com sucesso!', 'Aula2 Store')
+                // alert('Produto excluído com sucesso!')
+            }
+        }
+
+        xhr.open('get', url)//xht inicia a solicitação e envia a url
+        xhr.send() //vai pro servidor
+    }
+
+</script>

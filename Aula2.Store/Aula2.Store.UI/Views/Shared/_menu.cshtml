@@ -1,0 +1,50 @@
+﻿<nav class="navbar navbar-expand-lg navbar-dark bg-secondary">
+    <a class="navbar-brand" href="#">Aula de Asp Net</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    @* mr = margem direita / ml = margem esquerda *@
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="@Url.Action("Index", "Home")">Pagina Inicial</a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="@Url.Action("Sobre","Home")">Sobre</a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="@Url.Action("Index", "Produtos")">Produtos</a>
+            </li>
+        </ul>
+
+        <!--Menu para realizar o logout e outras funções do sistema-->
+        
+        <ul class="navbar-nav ml-auto">
+
+            <!--se ele tiver autenticado...-->
+            @if (User.Identity.IsAuthenticated)
+            {
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        @User.Identity.Name
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item" href="#">Trocar Senha</a>
+                        <a class="dropdown-item" href="#">Meu Perfil</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="@Url.Action("Logout", "Conta")">Efetuar Logout</a>
+                    </div>
+                </li>
+            }
+            else
+            {
+                <li class="nav-item active">
+                    <a class="nav-link" href="@Url.Action("Login", "Conta")">Efetuar Login</a>
+                </li>
+            }
+
+        </ul>
+    </div>
+</nav>

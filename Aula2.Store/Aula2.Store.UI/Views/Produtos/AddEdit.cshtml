@@ -1,0 +1,97 @@
+﻿<!--item essence para toda a View-->
+@model Aula2.Store.UI.ViewModels.Produtos.AddEdit.ProdutoAddEditVM
+
+@{      //isto é uma instancia em c#
+    ViewBag.Title = $"{(Model.Id == 0 ? "Adicionar " : "Editar ")}Produto";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<form method="post">
+
+    <div>
+        <!--utiliza-se dessa forma para montar um indice de erros-->
+        @*@Html.ValidationSummary()*@
+    </div>
+
+    <div class="form-group">
+        <label for="txtNome">Nome: </label>  <!--for relaciona o label que o input txtnome-->
+        <!--para selecionar a label e focar no input, utilizo o autofocus-->
+        <!--<input class="form-control" type="text" name="nome" value="@Model.Nome" id="txtNome" autofocus />-->
+        <!--esse helper substitui o input em C#, incluindo os seus atributos: class, type, name, value, id, autofocus-->
+        <!--esse helper intruduz neste input diversos data.val que validão os dados de cada campo da tabela conforme foi criada validando pelo controller e impedir o post do formulario no Bd para fazer essa validação-->
+        <!--para isso é necessario instalar o nuget jQuery.Validation-->
+        @Html.TextBoxFor(modelo => modelo.Nome, new { @class = "form-control", autofocus = "" })
+        <small>
+            <!--valida a informação e mostra uma mensagem que o item esta faltando-->
+            @Html.ValidationMessageFor(modelo => modelo.Nome, null, new { @class = "text-danger" })
+        </small>
+    </div>
+
+    <div class="form-group">
+        <label>Preço: </label>
+        <!--<input class="form-control" type="text" name="preco" value="@Model.Preco" />  -->
+        @Html.TextBoxFor(modelo => modelo.Preco, new { @class = "form-control", autofocus = "" })
+        <small>
+            @Html.ValidationMessageFor(modelo => modelo.Preco, null, new { @class = "text-danger" })
+        </small>
+    </div>
+
+    <div class="form-group">
+        <label>Tipo: </label>
+        <!--o nome do select vai receber o tipo de dado da chave primaria ou estrangeira que quero setar-->
+        @*metodo utilizado no mvc3
+             <select name="TipoDeProdutoId" class="form-control">
+                <option value="">Selecione um tipo... </option>
+                substituo o var pelo namespace do projeto para utilizar o item essence
+                @foreach (Aula2.Store.UI.Models.TipoDeProduto item in ViewBag.Tipos)
+                {
+                    //@() chama-se ternário, substitui o if -
+                    //se o tipo itemId == tiposelecionado faça (?) primeira condição :(se não) segunda condição
+                    <option @(item.Id == Model.TipoDeProdutoId ? "selected" : "" )
+                            value="@item.Id">
+                        @item.Nome
+                        </option>
+                    }
+            </select>*@
+        <!--parametros do helper: nome=>dado acessado, utilizar o ViewBag do parametro do controler que é uma lista fonte de dados,o que vai aparecer no value, o texto do componete, option label, html atributos   -->
+        @Html.DropDownListFor(modelo=>modelo.TipoDeProdutoId,
+                              new SelectList(ViewBag.Tipos, "Id", "Nome"),
+                              "Selecione um tipo...",
+                              new { @class = "form-control" }
+                             )
+        <small>
+            @Html.ValidationMessageFor(modelo => modelo.TipoDeProdutoId, null, new { @class = "text-danger" })
+        </small>
+    </div>
+
+    <div class="form-group">
+        <label>Quantidade: </label>
+        <!--<input class="form-control" type="text" name="quantidade" value="@Model.Quantidade" /> -->
+        @Html.TextBoxFor(modelo => modelo.Quantidade, new { @class = "form-control", autofocus = "" })
+        <small>
+            @Html.ValidationMessageFor(modelo => modelo.Quantidade, null, new { @class = "text-danger" })
+        </small>
+    </div>
+
+    <div>
+        <!--utiliza-se dessa forma para montar um indice de erros-->
+        @Html.ValidationSummary(true)
+    </div>
+
+    <div>
+        <button class="btn btn-sm btn-outline-primary">
+            <i class="far fa-save"></i> Salvar</button>
+        <button class="btn btn-sm btn-outline-danger">
+            <i class="fas fa-ban"></i>
+            <a href="@Url.Action("Index")">Cancelar</a>
+        </button>
+    </div>
+</form>
+
+<!--aqui sera inserido na renderização do _Layout, instalar o Nuget Microsof.jQuery.Unobtrusive.Validation-->
+@section scripts{
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/Scripts/bootstrap.validate.js"></script>
+}

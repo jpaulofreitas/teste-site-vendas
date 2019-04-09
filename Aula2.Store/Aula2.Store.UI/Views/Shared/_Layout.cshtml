@@ -1,0 +1,36 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/site.css" rel="stylesheet" />
+    <link href="~/Content/toastr.min.css" rel="stylesheet" />
+    <script src="~/Scripts/fontawesome/all.min.js"></script>
+    <title>Aula Asp Net | @ViewBag.Title</title>
+</head>
+<body>
+
+    <div>
+        @Html.Partial("_menu")
+    </div>
+            
+    <div class="container">
+        @RenderBody()
+    </div>
+
+    <footer class="myfooter bg-light">
+        <div class="container">
+            <span class="text-muted">&copy;@DateTime.Now.Year Aula de ASP.Net</span>
+        </div>
+    </footer>
+
+    <script src="~/Scripts/jquery-3.0.0.min.js"></script>
+    <script src="~/Scripts/bootstrap.bundle.min.js"></script>
+    <script src="~/Scripts/toastr.min.js"></script>
+
+    <!--renderizadação de um bloco de codigo primeiro parametro é nome,segundo parametro requerido ou nao em todas as sessoes-->
+    @RenderSection("scripts",false)
+
+</body>
+</html>
